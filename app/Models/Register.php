@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Register extends Model
+{
+    use HasFactory;
+
+    // กำหนดฟิลด์ที่สามารถกรอกข้อมูลได้
+    protected $fillable = [
+        'student_id',
+        'course_id',
+    ];
+
+    // ความสัมพันธ์กับ Student
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    // ความสัมพันธ์กับ Course
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+}
