@@ -9,16 +9,16 @@ use Inertia\Inertia;
 class ProductController extends Controller
 {
     // แสดงรายการสินค้าทั้งหมด
-    public function index()
+    public function index() 
     {
-        $products = Product::with(['orderDetails.order.customer'])->get();
+        $products = Product::with(['orderDetails.order.customer'])->get(); // ดึงข้อมูลสินค้าพร้อมกับข้อมูลสั่งซื้อและลูกค้าที่สั่งซื้อ
         return Inertia::render('Products/index', [
             'products' => $products
         ]);
     }
 
     // แสดงฟอร์มเพิ่มสินค้าใหม่
-    public function create()
+    public function create() //เรนเดอร์หน้าเพิ่มสินค้าใหม่ (Products/Create) ผ่าน Inertia
     {
         return Inertia::render('Products/Create');
     }
@@ -29,13 +29,14 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0', // เปลี่ยนจาก 'storage' เป็น 'stock'
+            'price' => 'required|numeric|min:0', //price → จำเป็นต้องกรอก, เป็น ตัวเลข, ต้องไม่ติดลบ
+            'stock' => 'required|integer|min:0', //stock → จำเป็นต้องกรอก, เป็น จำนวนเต็ม, ต้องไม่ติดลบ
         ]);
 
+        //สร้างสินค้าใหม่ โดยใช้ only() ดึงเฉพาะค่าที่ต้องการจาก request
         Product::create($request->only('name', 'description', 'price', 'stock'));
 
-        return redirect()->route('products.index')->with('success', 'เพิ่มสินค้าสำเร็จ!');
+        return redirect()->route('products.index')->with('success', 'เพิ่มสินค้าสำเร็จ!'); //แสดงว่า บันทึกสินค้าสำเร็จ
     }
 
     // แสดงฟอร์มแก้ไขสินค้า

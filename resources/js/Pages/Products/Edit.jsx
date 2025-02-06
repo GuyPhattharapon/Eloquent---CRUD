@@ -1,8 +1,10 @@
 import { useForm } from '@inertiajs/react';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
-export default function Edit({ product }) {
-    const { data, setData, put, processing, errors } = useForm({
+
+//Edit({ product }) → เป็น Function Component ที่รับ product เป็น prop (ข้อมูลสินค้าที่ต้องการแก้ไข)
+export default function Edit({ product }) { // useForm สำหรับจัดการฟอร์ม
+    const { data, setData, put, processing, errors } = useForm({ 
         name: product.name,
         description: product.description,
         price: product.price,
@@ -11,7 +13,7 @@ export default function Edit({ product }) {
     });
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault(); //ป้องกันการโหลดหน้าใหม่เมื่อกดปุ่ม Submit และ put ไปยัง /products/{id} 
         put(`/products/${product.id}`);
     };
 

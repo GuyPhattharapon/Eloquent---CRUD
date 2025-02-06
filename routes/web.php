@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
  
 //เพิ่ม Route สำหรับแสดงรายการสินค้าทั้งหมด
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () { // เพิ่ม middleware สำหรับตรวจสอบการเข้าสู่ระบบ
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create'); // เพิ่ม Route นี้
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
